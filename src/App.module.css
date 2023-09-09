@@ -1,0 +1,21 @@
+body {
+  background-color: #eef2f7;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  justify-content: left;
+  width: 48%;
+  margin: auto;
+  margin-top: 20px;
+  margin-top: 30px;
+}
+
+.titleStyle {
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 10px;
+}

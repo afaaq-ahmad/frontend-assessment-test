@@ -1,0 +1,84 @@
+.commentContainer {
+  display: flex;
+  justify-content: left;
+  background-color: white;
+  margin: 6px;
+  box-shadow: 7px 15px 23px -10px rgba(0, 0, 0, 0.12);
+
+  padding: 10px 3px;
+}
+
+.profileImage {
+  width: 10%;
+  text-align: center;
+}
+
+.profileImage img {
+  width: 36px;
+  text-align: center;
+}
+
+.commentContent {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  line-height: 20px;
+}
+
+.userName {
+  font-weight: 500;
+}
+
+.commentBody {
+  color: #646464;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin: 2px 1px;
+}
+
+.like_reply_container {
+  display: flex;
+  height: 30px;
+  padding-bottom: 3px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dotContainer {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  color: black;
+  padding: 3px 10px;
+}
+
+.dot {
+  height: 4px;
+  width: 4px;
+  background-color: #585858;
+  border-radius: 50%;
+  display: inline-block;
+  align-items: center;
+}
+ul {
+  color: rgb(90, 90, 90);
+}
+
+li {
+  margin-right: 5px;
+}
+
+.replyStyle {
+  color: #6590ff;
+  cursor: pointer;
+}
+
+.numOfLikes {
+  margin-left: 7px;
+  font-weight: 300;
+  color: #757575;
+}
