@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./commentStyle.module.css";
 import user1 from "../../images/user1.png";
 import user2 from "../../images/user2.png";
 import user3 from "../../images/user3.png";
 import user4 from "../../images/user4.png";
-
+import {
+  deleteComment,
+  uploadReply,
+  selectReplies,
+} from "../../features/commentSlice";
+import EachReply from "../replies/EachReply";
 import createStyles from "./createCommentStyle.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 function EachComment({ props }) {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [replayable, setReplyable] = useState(false);
-  const [deletable, setDeletable] = useState(true);
+  const [delatable, setDeletabe] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
+  const dispatch = useDispatch();
+  const allReplies = useSelector(selectReplies);
 
   const likeCounter = () => {
     if (likeCount === 1) {
@@ -21,10 +31,27 @@ function EachComment({ props }) {
     }
   };
 
-  const deleteComment = () => {
-    setDeletable(false);
+  const postReply = () => {
+    let replyObj = {
+      id: uuidv4(),
+      commentID: props?.id,
+      description: replyContent,
+    };
+    dispatch(uploadReply(replyObj));
+    setReplyContent("");
   };
 
+  useEffect(() => {
+    if (props?.id !== 1 && props?.id !== 2 && props?.id !== 3) {
+      setDeletabe(true);
+    } else {
+      setDeletabe(false);
+    }
+  }, []);
+
+  const deleteTheComment = () => {
+    dispatch(deleteComment(props?.id));
+  };
   return (
     <>
       <div className={styles.commentContainer}>
@@ -32,11 +59,13 @@ function EachComment({ props }) {
           {props?.id === 1 && <img src={user1} alt="profile pic" />}
           {props?.id === 2 && <img src={user2} alt="profile pic" />}
           {props?.id === 3 && <img src={user3} alt="profile pic" />}
-          {props?.id === 4 && <img src={user4} alt="profile pic" />}
+          {props?.id !== 1 && props?.id !== 2 && props?.id !== 3 && (
+            <img src={user4} alt="profile pic" />
+          )}
         </div>
         <div className={styles.commentContent}>
           <div className={styles.userName}>{props?.userName}</div>
-          <div className={styles.commentBody}>{props?.commentDescription}</div>
+          <div className={styles.commentBody}>{props?.description}</div>
           <div className={styles.like_reply_container}>
             {!!liked && (
               <svg
@@ -79,7 +108,7 @@ function EachComment({ props }) {
               <li></li>
             </ul>
 
-            {props?.id !== 4 && !!deletable && (
+            {!delatable && (
               <div
                 className={styles.replyStyle}
                 onClick={() => {
@@ -90,27 +119,44 @@ function EachComment({ props }) {
               </div>
             )}
 
-            {props?.id === 4 && (
+            {!!delatable && (
               <div
                 style={{ color: "red" }}
                 className={styles.replyStyle}
                 onClick={() => {
-                  deleteComment();
+                  deleteTheComment();
                 }}
               >
                 Delete
               </div>
             )}
           </div>
+          {allReplies?.map((eachReply, index) => {
+            if (eachReply?.commentID === props?.id) {
+              return (
+                <>
+                  <EachReply
+                    key={index}
+                    props={{
+                      description: eachReply?.description,
+                      id: eachReply?.id,
+                    }}
+                  />
+                </>
+              );
+            }
+          })}
           {replayable && (
             <div
               className={createStyles.contentContainer}
-              style={{ width: "96%" }}
+              style={{ width: "95%" }}
             >
               <input
                 className={createStyles.inputStyle}
                 type="text"
+                value={replyContent}
                 placeholder="Write your comment"
+                onChange={(event) => setReplyContent(event?.target?.value)}
               />
               <div className={createStyles.sendIcon}>
                 <svg
@@ -119,6 +165,9 @@ function EachComment({ props }) {
                   viewBox="0 0 16 18"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  onClick={() => {
+                    postReply();
+                  }}
                 >
                   <path
                     d="M14.8763 1.0985L0.390353 9.45564C-0.175333 9.78068 -0.10345 10.5683 0.45911 10.8058L3.78134 12.1997L12.7604 4.28634C12.9323 4.1332 13.1761 4.3676 13.0292 4.54574L5.50028 13.7186L5.50028 16.2345C5.50028 16.9721 6.391 17.2627 6.82854 16.7283L8.81313 14.3124L12.7073 15.9438C13.1511 16.1314 13.6574 15.8532 13.7387 15.375L15.9889 1.87358C16.0952 1.24226 15.417 0.785966 14.8763 1.0985Z"

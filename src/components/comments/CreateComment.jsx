@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./createCommentStyle.module.css";
 import { addAComment } from "../../features/commentSlice";
 import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 export const CreateComment = () => {
   const [commentData, setCommentData] = useState("");
@@ -9,13 +10,15 @@ export const CreateComment = () => {
 
   const sendComment = () => {
     const commentObj = {
-      commentDescription: commentData,
-      id: 4,
+      description: commentData,
+      id: uuidv4(),
       userName: "John Doe",
     };
     dispatch(addAComment(commentObj));
     setCommentData("");
+    console.log(" fpofdgd", commentObj);
   };
+
   return (
     <>
       <div className={styles.inputContainer}>

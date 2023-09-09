@@ -11,7 +11,7 @@ export const listSlice = createSlice({
       state?.comments?.push(action?.payload);
     },
     uploadReply: (state, action) => {
-      state.reply = action?.payload;
+      state.replies?.push(action?.payload);
     },
     deleteComment: (state, action) => {
       state?.comments?.splice(

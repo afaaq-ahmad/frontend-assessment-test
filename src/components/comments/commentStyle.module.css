@@ -26,6 +26,7 @@
   font-size: 14px;
   font-family: "Poppins", sans-serif;
   line-height: 20px;
+  margin-left: 10px;
 }
 
 .userName {
@@ -81,4 +82,24 @@ li {
   margin-left: 7px;
   font-weight: 300;
   color: #757575;
+}
+
+@media screen and (max-width: 1060px) {
+  .commentContent {
+    width: 90%;
+    justify-content: right;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .commentContent {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .commentContent {
+    width: 80%;
+    margin-left: 20px;
+  }
 }

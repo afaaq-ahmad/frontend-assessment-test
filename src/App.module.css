@@ -5,7 +5,6 @@ body {
 .mainContainer {
   display: flex;
   flex-direction: column;
-  /* border: 1px solid black; */
   justify-content: left;
   width: 48%;
   margin: auto;
@@ -18,4 +17,16 @@ body {
   font-weight: bold;
   font-size: 20px;
   margin: 10px;
+}
+
+@media screen and (max-width: 1080px) {
+  .mainContainer {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .mainContainer {
+    width: 90%;
+  }
 }
